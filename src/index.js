@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import  './index.css';
+
+
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -53,7 +56,13 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? 'lightblue' : 'lightgrey',
     padding: grid,
-    width: 250
+    width: '27%'
+});
+
+const getListStyle1 = isDraggingOver => ({
+    background: isDraggingOver ? 'lightblue' : 'lightgrey',
+    padding: grid,
+    width: '70%'
 });
 
 class App extends Component {
@@ -82,7 +91,8 @@ class App extends Component {
             return;
         }
 
-        if (source.droppableId === destination.droppableId) {
+        if (source.droppableId === destination.droppableId) 
+        {
             const items = reorder(
                 this.getList(source.droppableId),
                 source.index,
@@ -96,7 +106,9 @@ class App extends Component {
             }
 
             this.setState(state);
-        } else {
+        } 
+        else 
+        {
             const result = move(
                 this.getList(source.droppableId),
                 this.getList(destination.droppableId),
@@ -115,7 +127,9 @@ class App extends Component {
     // But in this example everything is just done in one place for simplicity
     render() {
         return (
-            <DragDropContext onDragEnd={this.onDragEnd}>
+            <div className="full">
+                 <div className="set1">
+                <DragDropContext onDragEnd={this.onDragEnd}>
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
                         <div
@@ -144,11 +158,12 @@ class App extends Component {
                         </div>
                     )}
                 </Droppable>
-                <Droppable droppableId="droppable2">
+                <Droppable  droppableId="droppable2">
                     {(provided, snapshot) => (
                         <div
+                            id="dropZone"
                             ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}>
+                            style={getListStyle1(snapshot.isDraggingOver)}>
                             {this.state.selected.map((item, index) => (
                                 <Draggable
                                     key={item.id}
@@ -172,7 +187,15 @@ class App extends Component {
                         </div>
                     )}
                 </Droppable>
-            </DragDropContext>
+                </DragDropContext>
+
+                
+            </div>
+            
+                <button style={{'margin-top':'20px'}}>Save Format</button>
+            </div>
+           
+            
         );
     }
 }
